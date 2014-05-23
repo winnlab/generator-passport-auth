@@ -1,7 +1,6 @@
 passport = require 'passport'
 passport_local = require 'passport-local'
 LocalStrategy = passport_local.Strategy
-async = require 'async'
 
 user = require '<%= userModel %>'
 
@@ -17,13 +16,13 @@ passport.serializeUser (user, done) ->
 	done null, user.id
 
 passport.deserializeUser (id, done) ->
-	user.model.findOne
+	user.findOne
 		_id: id
 	, (err, user) ->
 		done err, user
 
 local = new LocalStrategy parameters, (username, password, done) ->
-	user.model.findOne
+	user.findOne
 		$or: [
 				email: username
 			,
@@ -41,32 +40,4 @@ local = new LocalStrategy parameters, (username, password, done) ->
 
 passport.use local
 
-module.exports =
-	passport: passport
-	register: (req, res) ->
-		usr = new user.model 
-			username: req.body.username
-			email: req.body.email
-			password: req.body.password
-		
-		async.waterfall [
-			(next) ->
-				usr.save next
-			->
-				res.redirect "/"
-		], (err) ->
-			console.log err
-			res.redirect "/register"
-	
-	login: passport.authenticate "local", 
-		failureRedirect: "/login"
-	
-	logout: (req, res) ->
-		req.logout
-		res.redirect "/"
-	
-	logged_in: (req, res, next) -> 
-		if req.isAuthenticated then next else res.redirect "/"
-	
-	not_logged_in: (req, res, next) -> 
-		if not req.isAuthenticated then next else res.redirect "/"
+module.exports = passport
