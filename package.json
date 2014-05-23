@@ -6,8 +6,8 @@
   "main": "app/index.js",
   "repository": "HydraOrc/generator-passport-auth",
   "author": {
-    "name": "",
-    "email": "",
+    "name": "HydraOrc",
+    "email": "hydra0@bigmir.net",
     "url": "https://github.com/HydraOrc"
   },
   "engines": {
