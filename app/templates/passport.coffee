@@ -25,19 +25,16 @@ passport.deserializeUser (id, done) ->
 local = new LocalStrategy parameters, (username, password, done) ->
 	user.model.findOne
 		$or: [
-			{
 				email: username
-			}
-			{
+			,
 				username: username
-			}
 		]
 	, (err, usr) ->
 		return done(err) if err
-		unless usr
+		if not usr
 			return done null, false, 
 				message: messages.incorrectUsername
-		unless usr.validPassword password
+		if not usr.validPassword password
 			return done null, false, 
 				message: messages.incorrectPassword
 		done null, usr
