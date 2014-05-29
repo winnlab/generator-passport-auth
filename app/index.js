@@ -12,7 +12,7 @@ PassportAuthGenerator = yeoman.generators.Base.extend({
 	askFor: function() {
 		var	done = this.async();
 		
-		this.log(yosay('Welcome to MongooseModel generator!'));
+		this.log(yosay('Welcome to PassportAuth generator!'));
 		
 		var prompts = [
 			{
